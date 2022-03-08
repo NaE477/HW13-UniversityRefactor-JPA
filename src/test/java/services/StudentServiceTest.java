@@ -11,25 +11,26 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentServiceTest {
     private static StudentService studentService;
-    private static SessionFactory sessionFactory;
+    private static EntityManagerFactory entityManagerFactory;
 
     @BeforeAll
     static void initialize() {
-        sessionFactory = SessionFactorySingletonTest.getInstance();
-        studentService = new StudentService(sessionFactory);
+        entityManagerFactory = EntityManagerFactorySingletonTest.getInstance();
+        studentService = new StudentService(entityManagerFactory);
     }
 
     @Test
     void sessionFactoryTest() {
         assertDoesNotThrow(() -> {
-            SessionFactory sessionFactory = SessionFactorySingletonTest.getInstance();
-            StudentService studentService = new StudentService(sessionFactory);
+            EntityManagerFactory entityManagerFactory = EntityManagerFactorySingletonTest.getInstance();
+            StudentService studentService = new StudentService(entityManagerFactory);
             studentService.findAll();
         });
     }
@@ -95,10 +96,10 @@ class StudentServiceTest {
     @Test
     void findAllByCourse() {
         //Arrange
-        CourseService courseService = new CourseService(SessionFactorySingletonTest.getInstance());
-        GradeService gradeService = new GradeService(SessionFactorySingletonTest.getInstance());
-        ProfessorService professorService = new ProfessorService(SessionFactorySingletonTest.getInstance());
-        TermService termService = new TermService(SessionFactorySingletonTest.getInstance());
+        CourseService courseService = new CourseService(EntityManagerFactorySingletonTest.getInstance());
+        GradeService gradeService = new GradeService(EntityManagerFactorySingletonTest.getInstance());
+        ProfessorService professorService = new ProfessorService(EntityManagerFactorySingletonTest.getInstance());
+        TermService termService = new TermService(EntityManagerFactorySingletonTest.getInstance());
         Term term = new Term(0,3,null);
         termService.initiate(term);
         var professor = new Professor(0,"pFirstname","pLastname","pUsername","pLastname", ProfPosition.C);
@@ -175,14 +176,15 @@ class StudentServiceTest {
 
     @AfterEach
     void cleanDependencies() {
-        var session = sessionFactory.openSession();
-        var transaction = session.beginTransaction();
-        session.createSQLQuery("truncate table student cascade ").executeUpdate();
+        var session = entityManagerFactory.createEntityManager();
+        var transaction = session.getTransaction();
+        transaction.begin();
+        session.createNativeQuery("truncate table student cascade ").executeUpdate();
         //performed only for findAllByCourse test
-        session.createSQLQuery("truncate table professor cascade ").executeUpdate();
-        session.createSQLQuery("truncate table course cascade ").executeUpdate();
-        session.createSQLQuery("truncate table grade cascade ").executeUpdate();
-        session.createSQLQuery("truncate table term cascade ").executeUpdate();
+        session.createNativeQuery("truncate table professor cascade ").executeUpdate();
+        session.createNativeQuery("truncate table course cascade ").executeUpdate();
+        session.createNativeQuery("truncate table grade cascade ").executeUpdate();
+        session.createNativeQuery("truncate table term cascade ").executeUpdate();
 
         transaction.commit();
         session.close();

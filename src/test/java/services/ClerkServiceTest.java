@@ -6,25 +6,26 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ClerkServiceTest {
-    static SessionFactory sessionFactory;
+    static EntityManagerFactory entityManagerFactory;
     static ClerkService clerkService;
 
     @BeforeAll
     static void initiate() {
-        sessionFactory = SessionFactorySingletonTest.getInstance();
-        clerkService = new ClerkService(sessionFactory);
-        assertNotNull(sessionFactory);
+        entityManagerFactory = EntityManagerFactorySingletonTest.getInstance();
+        clerkService = new ClerkService(entityManagerFactory);
+        assertNotNull(entityManagerFactory);
     }
 
     @Test
     void sessionFactoryTest() {
-        SessionFactory sessionFactory = SessionFactorySingletonTest.getInstance();
-        assertNotNull(sessionFactory);
+        EntityManagerFactory entityManagerFactory = EntityManagerFactorySingletonTest.getInstance();
+        assertNotNull(entityManagerFactory);
     }
 
     @Test
@@ -134,10 +135,11 @@ class ClerkServiceTest {
 
     @AfterEach
     void clear() {
-        var session = sessionFactory.openSession();
-        var transaction = session.beginTransaction();
-        session.createSQLQuery("truncate table clerk").executeUpdate();
+        var entityManager = entityManagerFactory.createEntityManager();
+        var transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.createNativeQuery("truncate table clerk").executeUpdate();
         transaction.commit();
-        session.close();
+        entityManager.close();
     }
 }

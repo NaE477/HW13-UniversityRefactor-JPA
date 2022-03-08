@@ -2,30 +2,30 @@ package services;
 
 import models.users.ProfPosition;
 import models.users.Professor;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProfessorServiceTest {
-    static SessionFactory sessionFactory;
+    static EntityManagerFactory entityManagerFactory;
     static ProfessorService professorService;
 
     @BeforeAll
     static void initiate() {
-        sessionFactory = SessionFactorySingletonTest.getInstance();
-        professorService = new ProfessorService(sessionFactory);
-        assertNotNull(sessionFactory);
+        entityManagerFactory = EntityManagerFactorySingletonTest.getInstance();
+        professorService = new ProfessorService(entityManagerFactory);
+        assertNotNull(entityManagerFactory);
     }
 
     @Test
     void sessionFactoryTest() {
-        var sessionFactory = SessionFactorySingletonTest.getInstance();
+        var sessionFactory = EntityManagerFactorySingletonTest.getInstance();
         assertNotNull(sessionFactory);
     }
 
@@ -131,9 +131,10 @@ class ProfessorServiceTest {
 
     @AfterEach
     void clear() {
-        var session = sessionFactory.openSession();
-        var transaction = session.beginTransaction();
-        session.createSQLQuery("truncate table professor cascade").executeUpdate();
+        var session = entityManagerFactory.createEntityManager();
+        var transaction = session.getTransaction();
+        transaction.begin();
+        session.createNativeQuery("truncate table professor cascade").executeUpdate();
         transaction.commit();
         session.close();
     }

@@ -6,18 +6,18 @@ import models.things.Term;
 import models.users.ProfPosition;
 import models.users.Professor;
 import models.users.Student;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GradeServiceTest {
-    private static SessionFactory sessionFactory;
+    private static EntityManagerFactory entityManagerFactory;
 
     private static GradeService gradeService;     //main service
 
@@ -34,14 +34,14 @@ class GradeServiceTest {
 
     @BeforeAll
     static void initiate() {
-        sessionFactory = SessionFactorySingletonTest.getInstance();
-        gradeService = new GradeService(sessionFactory);
-        courseService = new CourseService(sessionFactory);
-        studentService = new StudentService(sessionFactory);
-        termService = new TermService(sessionFactory);
-        professorService = new ProfessorService(sessionFactory);
+        entityManagerFactory = EntityManagerFactorySingletonTest.getInstance();
+        gradeService = new GradeService(entityManagerFactory);
+        courseService = new CourseService(entityManagerFactory);
+        studentService = new StudentService(entityManagerFactory);
+        termService = new TermService(entityManagerFactory);
+        professorService = new ProfessorService(entityManagerFactory);
 
-        assertNotNull(sessionFactory);
+        assertNotNull(entityManagerFactory);
     }
 
     @BeforeEach
@@ -84,7 +84,7 @@ class GradeServiceTest {
     void updateGrade() {
         //Arrange
         Grade toSave = new Grade(0,student,course1,18.0);
-        Grade toInsert = gradeService.pickCourse(toSave);
+        gradeService.pickCourse(toSave);
         Course newCourse = new Course(0,10,"new course",null,null,null);
         courseService.createNewCourse(newCourse);
         //Act
@@ -102,7 +102,7 @@ class GradeServiceTest {
     void deleteGrade() {
         //Arrange
         Grade toSave = new Grade(0,student,course1,18.0);
-        Grade toInsert = gradeService.pickCourse(toSave);
+        gradeService.pickCourse(toSave);
         //Act
         Grade toDelete = gradeService.find(student,course1);
         gradeService.deleteGrade(toDelete);
@@ -114,7 +114,7 @@ class GradeServiceTest {
     void find() {
         //Arrange
         var grade = new Grade(0,student,course1,18.0);
-        Grade toSave = gradeService.pickCourse(grade);
+        gradeService.pickCourse(grade);
         //Act
         Grade toFind = gradeService.find(student,course1);
         //Assert
@@ -141,13 +141,14 @@ class GradeServiceTest {
 
     @AfterEach
     void cleanDependencies() {
-        var session = sessionFactory.openSession();
-        var transaction = session.beginTransaction();
-        session.createSQLQuery("truncate table student cascade ").executeUpdate();
-        session.createSQLQuery("truncate table professor cascade").executeUpdate();
-        session.createSQLQuery("truncate table term cascade").executeUpdate();
-        session.createSQLQuery("truncate table course cascade").executeUpdate();
-        session.createSQLQuery("truncate table grade cascade").executeUpdate();
+        var session = entityManagerFactory.createEntityManager();
+        var transaction = session.getTransaction();
+        transaction.begin();
+        session.createNativeQuery("truncate table student cascade ").executeUpdate();
+        session.createNativeQuery("truncate table professor cascade").executeUpdate();
+        session.createNativeQuery("truncate table term cascade").executeUpdate();
+        session.createNativeQuery("truncate table course cascade").executeUpdate();
+        session.createNativeQuery("truncate table grade cascade").executeUpdate();
         transaction.commit();
         session.close();
     }

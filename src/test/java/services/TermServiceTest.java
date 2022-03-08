@@ -1,30 +1,31 @@
 package services;
 
 import models.things.Term;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TermServiceTest {
     private static TermService termService;
-    private static SessionFactory sessionFactory;
+    private static EntityManagerFactory entityManagerFactory;
     @BeforeAll
     static void initiate() {
-        sessionFactory = SessionFactorySingletonTest.getInstance();
-        termService = new TermService(sessionFactory);
+        entityManagerFactory = EntityManagerFactorySingletonTest.getInstance();
+        termService = new TermService(entityManagerFactory);
     }
 
     @Test
     void sessionFactoryTest() {
         assertDoesNotThrow(() -> {
-            SessionFactory sessionFactory = SessionFactorySingletonTest.getInstance();
-            TermService termService = new TermService(sessionFactory);
-            var size = termService.findAll().size();
+            EntityManagerFactory entityManagerFactory = EntityManagerFactorySingletonTest.getInstance();
+            TermService termService = new TermService(entityManagerFactory);
+            var size = termService.findAll();
+            assertNotNull(size);
         });
     }
 
@@ -94,10 +95,10 @@ class TermServiceTest {
 
     @AfterEach
     void cleanUp() {
-        var session = sessionFactory.openSession();
-        var transaction = session.beginTransaction();
-        session.createSQLQuery("truncate table term cascade ").executeUpdate();
-
+        var session = entityManagerFactory.createEntityManager();
+        var transaction = session.getTransaction();
+        transaction.begin();
+        session.createNativeQuery("truncate table term cascade ").executeUpdate();
         transaction.commit();
         session.close();
     }

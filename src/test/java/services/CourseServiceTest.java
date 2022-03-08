@@ -4,9 +4,9 @@ import models.things.Course;
 import models.things.Term;
 import models.users.ProfPosition;
 import models.users.Professor;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.*;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,19 +14,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class CourseServiceTest {
     private static CourseService courseService;
     private static ProfessorService professorService;
-    private static SessionFactory sessionFactory;
+    private static EntityManagerFactory entityManagerFactory;
     private static TermService termService;
     private Term term;
     private Professor professor;
 
     @BeforeAll
     static void initiate() {
-        sessionFactory = SessionFactorySingletonTest.getInstance();
-        courseService = new CourseService(sessionFactory);
-        professorService = new ProfessorService(sessionFactory);
-        termService = new TermService(sessionFactory);
+        entityManagerFactory = EntityManagerFactorySingletonTest.getInstance();
+        courseService = new CourseService(entityManagerFactory);
+        professorService = new ProfessorService(entityManagerFactory);
+        termService = new TermService(entityManagerFactory);
 
-        assertNotNull(sessionFactory);
+        assertNotNull(entityManagerFactory);
     }
 
     @BeforeEach
@@ -141,11 +141,12 @@ class CourseServiceTest {
 
     @AfterEach
     void cleanCourse() {
-        var session = sessionFactory.openSession();
-        var transaction = session.beginTransaction();
-        session.createSQLQuery("truncate table course cascade ").executeUpdate();
-        session.createSQLQuery("truncate table professor cascade").executeUpdate();
-        session.createSQLQuery("truncate table term cascade").executeUpdate();
+        var session = entityManagerFactory.createEntityManager();
+        var transaction = session.getTransaction();
+        transaction.begin();
+        session.createNativeQuery("truncate table course cascade ").executeUpdate();
+        session.createNativeQuery("truncate table professor cascade").executeUpdate();
+        session.createNativeQuery("truncate table term cascade").executeUpdate();
         transaction.commit();
         session.close();
     }

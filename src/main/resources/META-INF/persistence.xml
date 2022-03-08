@@ -15,9 +15,13 @@
         <class>models.users.ProfPosition</class>
         <class>models.users.Student</class>
         <class>models.users.User</class>
+        
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/"/>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.user" value="intellij"/>
             <property name="javax.persistence.jdbc.password" value="intellij"/>
             <property name="show_sql" value="true"/>
