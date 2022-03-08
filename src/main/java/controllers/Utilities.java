@@ -1,19 +1,19 @@
 package controllers;
 
 import models.users.User;
-import org.hibernate.SessionFactory;
 import services.ClerkService;
 import services.ProfessorService;
 import services.StudentService;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.Scanner;
 
 public class Utilities {
     static Scanner sc = new Scanner(System.in);
-    private static final SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
-    private static final ClerkService clerkService = new ClerkService(sessionFactory);
-    private static final ProfessorService professorService = new ProfessorService(sessionFactory);
-    private static final StudentService studentService = new StudentService(sessionFactory);
+    private static final EntityManagerFactory entityManagerFactory = EntityManagerFactorySingleton.getInstance();
+    private static final ClerkService clerkService = new ClerkService(entityManagerFactory);
+    private static final ProfessorService professorService = new ProfessorService(entityManagerFactory);
+    private static final StudentService studentService = new StudentService(entityManagerFactory);
 
     public static String usernameReceiver() {
         while (true) {

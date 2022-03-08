@@ -3,9 +3,9 @@ package controllers.clerkControllers;
 import controllers.Utilities;
 import models.things.Term;
 import models.users.Clerk;
-import org.hibernate.SessionFactory;
 import services.*;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.*;
 
 public class ClerkController {
@@ -17,14 +17,14 @@ public class ClerkController {
     private final EndTermController endTermController;
     private final Scanner sc = new Scanner(System.in);
 
-    public ClerkController(SessionFactory sessionFactory, Integer clerkId) {
-        ClerkService clerkService = new ClerkService(sessionFactory);
+    public ClerkController(EntityManagerFactory entityManagerFactory, Integer clerkId) {
+        ClerkService clerkService = new ClerkService(entityManagerFactory);
         clerk = clerkService.find(clerkId);
-        termService = new TermService(sessionFactory);
-        signUpController = new SignUpController(sessionFactory);
-        editController = new EditController(sessionFactory);
-        deleteController = new DeleteController(sessionFactory);
-        endTermController = new EndTermController(sessionFactory);
+        termService = new TermService(entityManagerFactory);
+        signUpController = new SignUpController(entityManagerFactory);
+        editController = new EditController(entityManagerFactory);
+        deleteController = new DeleteController(entityManagerFactory);
+        endTermController = new EndTermController(entityManagerFactory);
     }
 
     public void entry() {

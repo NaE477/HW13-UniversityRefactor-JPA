@@ -4,6 +4,7 @@ import controllers.Utilities;
 import org.hibernate.SessionFactory;
 import services.TermService;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -11,8 +12,8 @@ public class EndTermController {
     private final Scanner sc = new Scanner(System.in);
     private final TermService termService;
 
-    public EndTermController(SessionFactory sessionFactory) {
-        termService = new TermService(sessionFactory);
+    public EndTermController(EntityManagerFactory entityManagerFactory) {
+        termService = new TermService(entityManagerFactory);
     }
 
     public void endTerm() {

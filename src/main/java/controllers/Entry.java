@@ -7,17 +7,17 @@ import models.users.Clerk;
 import models.users.Professor;
 import models.users.Student;
 import models.users.User;
-import org.hibernate.SessionFactory;
 import services.ClerkService;
 import services.ProfessorService;
 import services.StudentService;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.*;
 
 public class Entry {
 
     static Scanner sc = new Scanner(System.in);
-    static SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
+    static EntityManagerFactory entityManagerFactory = EntityManagerFactorySingleton.getInstance();
 
     public static void main(String[] args) {
         initiateAdmin();
@@ -41,22 +41,22 @@ public class Entry {
         User user = auth(username, password);
         if (user != null) {
             if (user instanceof Clerk) {
-                ClerkController clerkController = new ClerkController(sessionFactory, user.getId());
+                ClerkController clerkController = new ClerkController(entityManagerFactory, user.getId());
                 clerkController.entry();
             } else if (user instanceof Professor) {
-                ProfessorController professorController = new ProfessorController(sessionFactory, user.getId());
+                ProfessorController professorController = new ProfessorController(entityManagerFactory, user.getId());
                 professorController.entry();
             } else if (user instanceof Student) {
-                StudentController studentController = new StudentController(sessionFactory, user.getId());
+                StudentController studentController = new StudentController(entityManagerFactory, user.getId());
                 studentController.entry();
             }
         } else Utilities.printGreen("Wrong Username/Password.");
     }
 
     private static User auth(String username, String password) {
-        ClerkService clerkService = new ClerkService(sessionFactory);
-        ProfessorService professorService = new ProfessorService(sessionFactory);
-        StudentService studentService = new StudentService(sessionFactory);
+        ClerkService clerkService = new ClerkService(entityManagerFactory);
+        ProfessorService professorService = new ProfessorService(entityManagerFactory);
+        StudentService studentService = new StudentService(entityManagerFactory);
 
         Clerk probableClerk = clerkService.find(username);
         Professor probableProfessor = professorService.find(username);
@@ -69,7 +69,7 @@ public class Entry {
     }
 
     private static void initiateAdmin(){
-        ClerkService clerkService = new ClerkService(sessionFactory);
+        ClerkService clerkService = new ClerkService(entityManagerFactory);
         if(clerkService.findAll().size() == 0) {
             clerkService.signUpClerk(new Clerk(0,"admin","admin","admin","admin"));
             Utilities.printGreen("Admin user initiated due to first time login.");

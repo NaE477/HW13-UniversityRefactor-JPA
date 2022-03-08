@@ -6,6 +6,7 @@ import models.users.*;
 import org.hibernate.SessionFactory;
 import services.*;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.*;
 
 public class SignUpController {
@@ -16,12 +17,12 @@ public class SignUpController {
     private final CourseService courseService;
     private final TermService termService;
 
-    public SignUpController(SessionFactory sessionFactory) {
-        clerkService = new ClerkService(sessionFactory);
-        professorService = new ProfessorService(sessionFactory);
-        studentService = new StudentService(sessionFactory);
-        courseService = new CourseService(sessionFactory);
-        termService = new TermService(sessionFactory);
+    public SignUpController(EntityManagerFactory entityManagerFactory) {
+        clerkService = new ClerkService(entityManagerFactory);
+        professorService = new ProfessorService(entityManagerFactory);
+        studentService = new StudentService(entityManagerFactory);
+        courseService = new CourseService(entityManagerFactory);
+        termService = new TermService(entityManagerFactory);
     }
 
 

@@ -12,6 +12,7 @@ import services.CourseService;
 import services.ProfessorService;
 import services.StudentService;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -23,11 +24,11 @@ public class EditController {
     private final StudentService studentService;
     private final CourseService courseService;
 
-    public EditController(SessionFactory sessionFactory) {
-        clerkService = new ClerkService(sessionFactory);
-        professorService = new ProfessorService(sessionFactory);
-        studentService = new StudentService(sessionFactory);
-        courseService = new CourseService(sessionFactory);
+    public EditController(EntityManagerFactory entityManagerFactory) {
+        clerkService = new ClerkService(entityManagerFactory);
+        professorService = new ProfessorService(entityManagerFactory);
+        studentService = new StudentService(entityManagerFactory);
+        courseService = new CourseService(entityManagerFactory);
     }
 
     public void editClerk() {

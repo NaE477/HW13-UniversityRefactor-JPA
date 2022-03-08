@@ -11,6 +11,7 @@ import services.CourseService;
 import services.ProfessorService;
 import services.StudentService;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,11 +21,11 @@ public class DeleteController {
     private final StudentService studentService;
     private final CourseService courseService;
 
-    public DeleteController(SessionFactory sessionFactory) {
-        clerkService = new ClerkService(sessionFactory);
-        professorService = new ProfessorService(sessionFactory);
-        studentService = new StudentService(sessionFactory);
-        courseService = new CourseService(sessionFactory);
+    public DeleteController(EntityManagerFactory entityManagerFactory) {
+        clerkService = new ClerkService(entityManagerFactory);
+        professorService = new ProfessorService(entityManagerFactory);
+        studentService = new StudentService(entityManagerFactory);
+        courseService = new CourseService(entityManagerFactory);
     }
 
     public void deleteClerk() {
