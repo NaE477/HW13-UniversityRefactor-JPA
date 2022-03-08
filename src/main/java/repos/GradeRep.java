@@ -14,7 +14,7 @@ public class GradeRep extends BaseRepository<Grade> {
     }
 
     public List<Grade> readAllByStudent(Student student) {
-        try(var session = sessionFactory.openSession()) {
+        try(var session = entityManagerFactory.openSession()) {
             try {
                 return session
                         .createQuery("select g from Grade g where g.student.id = :sId", Grade.class)
@@ -27,7 +27,7 @@ public class GradeRep extends BaseRepository<Grade> {
     }
 
     public Grade read(Student student, Course course) {
-        try(var session = sessionFactory.openSession()) {
+        try(var session = entityManagerFactory.openSession()) {
             try {
                 return session
                         .createQuery("select g from Grade g where g.course.id = :cId and g.student.id = :sId", Grade.class)

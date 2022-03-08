@@ -12,7 +12,7 @@ public class ClerkRep extends BaseRepository<Clerk> {
     }
 
     public Clerk read(Integer id) {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             try {
                 return session.get(Clerk.class, id);
             } catch (Exception e) {
@@ -22,7 +22,7 @@ public class ClerkRep extends BaseRepository<Clerk> {
     }
 
     public Clerk read(String username) {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             try {
                 return session
                         .createQuery("from Clerk where username = :username",Clerk.class)
@@ -35,7 +35,7 @@ public class ClerkRep extends BaseRepository<Clerk> {
     }
 
     public List<Clerk> readAll() {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             var transaction = session.beginTransaction();
             try {
                 /*return session.createQuery("select c from Clerk c",Clerk.class).list();*/

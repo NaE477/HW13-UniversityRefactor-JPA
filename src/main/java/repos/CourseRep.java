@@ -14,7 +14,7 @@ public class CourseRep extends BaseRepository<Course> {
     }
 
     public Course read(Integer id) {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             try {
                 return session.get(Course.class, id);
             } catch (Exception e) {
@@ -24,7 +24,7 @@ public class CourseRep extends BaseRepository<Course> {
     }
 
     public List<Course> readAll() {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             var criteriaQuery = criteriaBuilder.createQuery(Course.class);
             var root = criteriaQuery.from(Course.class);
@@ -34,7 +34,7 @@ public class CourseRep extends BaseRepository<Course> {
     }
 
     public List<Course> readAll(Term term) {
-        try (var session = sessionFactory.openSession()){
+        try (var session = entityManagerFactory.openSession()){
             var query = session
                     .createQuery("from Course c where c.term.term = :term",Course.class)
                     .setParameter("term",term.getTerm());
@@ -43,7 +43,7 @@ public class CourseRep extends BaseRepository<Course> {
     }
 
     public List<Course> readAllByProfessor(Professor professor) {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             return session
                     .createQuery("select c from Course c left join fetch c.professor where c.professor.id = :pId",Course.class)
                     .setParameter("pId",professor.getId())
@@ -54,7 +54,7 @@ public class CourseRep extends BaseRepository<Course> {
     }
 
     public void detachProfessor(Professor professor) {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             var transaction = session.beginTransaction();
             session
                     .createQuery("update Course c set c.professor = null where c.professor.id = :pId")

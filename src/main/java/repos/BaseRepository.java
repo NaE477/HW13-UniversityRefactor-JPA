@@ -1,58 +1,57 @@
 package repos;
 
-import org.hibernate.SessionFactory;
+
+import javax.persistence.EntityManagerFactory;
 
 
-public abstract class BaseRepository<T> implements Repository<T>{
-    protected final SessionFactory sessionFactory;
+public abstract class BaseRepository<T> implements Repository<T> {
+    protected final EntityManagerFactory entityManagerFactory;
 
-    public BaseRepository(SessionFactory sessionFactory){
-        this.sessionFactory = sessionFactory;
+    public BaseRepository(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
     }
 
     @Override
     public T ins(T t) {
-        try(var session = sessionFactory.openSession()) {
-            var transaction = session.beginTransaction();
-            try {
-                session.save(t);
-                transaction.commit();
-                return t;
-            } catch (Exception e) {
-                e.printStackTrace();
-                transaction.rollback();
-                return null;
-            }
+        var entityManager = entityManagerFactory.createEntityManager();
+        var transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.persist(t);
+            transaction.commit();
+            return t;
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+            return null;
         }
     }
 
     @Override
     public void update(T t) {
-        try(var session = sessionFactory.openSession()) {
-            var transaction = session.beginTransaction();
-            try {
-                session.update(t);
-                transaction.commit();
-            } catch (Exception e) {
-                e.printStackTrace();
-                transaction.rollback();
-                throw e;
-            }
+        var entityManager = entityManagerFactory.createEntityManager();
+        var transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.merge(t);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
         }
     }
 
     @Override
     public void delete(T t) {
-        try(var session = sessionFactory.openSession()) {
-            var transaction = session.beginTransaction();
-            try {
-                session.delete(t);
-                transaction.commit();
-            } catch (Exception e) {
-                e.printStackTrace();
-                transaction.rollback();
-                throw e;
-            }
+        var entityManager = entityManagerFactory.createEntityManager();
+        var transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.remove(t);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
         }
     }
 }

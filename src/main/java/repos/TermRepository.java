@@ -2,7 +2,6 @@ package repos;
 
 import models.things.Term;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
@@ -14,17 +13,17 @@ public class TermRepository extends BaseRepository<Term> {
     }
 
     public Term read() {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             return session.createQuery("select t from Term t where t.term = (select max(term) from t)", Term.class).getSingleResult();
         }
     }
     public Term readFirst() {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             return session.createQuery("select t from Term t where t.term = (select min(term) from t)", Term.class).getSingleResult();
         }
     }
     public List<Term> readAll() {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             var criteriaQuery = criteriaBuilder.createQuery(Term.class);
             var root = criteriaQuery.from(Term.class);

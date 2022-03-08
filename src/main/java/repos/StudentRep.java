@@ -13,7 +13,7 @@ public class StudentRep extends BaseRepository<Student> {
     }
 
     public Student read(Integer id) {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             try {
                 return session.get(Student.class, id);
             } catch (Exception e) {
@@ -23,7 +23,7 @@ public class StudentRep extends BaseRepository<Student> {
     }
 
     public Student read(String username) {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             try {
                 CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
                 var criteriaQuery = criteriaBuilder.createQuery(Student.class);
@@ -39,7 +39,7 @@ public class StudentRep extends BaseRepository<Student> {
     }
 
     public List<Student> readAll() {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             try {
                 CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
                 var criteriaQuery = criteriaBuilder.createQuery(Student.class);
@@ -55,7 +55,7 @@ public class StudentRep extends BaseRepository<Student> {
     }
 
     public List<Student> readAll(Course course){
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             try {
                 return session
                         .createQuery("select s from Student s left join fetch s.grades g where g.course.id = :courseId",Student.class)

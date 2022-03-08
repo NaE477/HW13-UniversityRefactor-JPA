@@ -12,7 +12,7 @@ public class ProfessorRep extends BaseRepository<Professor> {
     }
 
     public Professor read(Integer id) {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             try {
                 return session.get(Professor.class, id);
             } catch (Exception e) {
@@ -22,7 +22,7 @@ public class ProfessorRep extends BaseRepository<Professor> {
     }
 
     public Professor read(String username){
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             try {
                 CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
                 var criteriaQuery = criteriaBuilder.createQuery(Professor.class);
@@ -37,7 +37,7 @@ public class ProfessorRep extends BaseRepository<Professor> {
         }
     }
     public List<Professor> readAll(){
-        try (var session = sessionFactory.openSession()) {
+        try (var session = entityManagerFactory.openSession()) {
             try {
                 CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
                 var criteriaQuery = criteriaBuilder.createQuery(Professor.class);
