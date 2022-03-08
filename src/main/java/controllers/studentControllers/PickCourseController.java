@@ -11,6 +11,7 @@ import services.GradeService;
 import services.StudentService;
 import services.TermService;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -22,13 +23,13 @@ public class PickCourseController {
     private final Term term;
     private final Student student;
 
-    public PickCourseController(SessionFactory sessionFactory, Integer studentId) {
-        courseService = new CourseService(sessionFactory);
-        gradeService = new GradeService(sessionFactory);
-        gradeUtils = new GradeUtils(sessionFactory);
-        TermService termService = new TermService(sessionFactory);
+    public PickCourseController(EntityManagerFactory entityManagerFactory, Integer studentId) {
+        courseService = new CourseService(entityManagerFactory);
+        gradeService = new GradeService(entityManagerFactory);
+        gradeUtils = new GradeUtils(entityManagerFactory);
+        TermService termService = new TermService(entityManagerFactory);
         term = termService.findCurrentTerm();
-        StudentService studentService = new StudentService(sessionFactory);
+        StudentService studentService = new StudentService(entityManagerFactory);
         student = studentService.find(studentId);
     }
 

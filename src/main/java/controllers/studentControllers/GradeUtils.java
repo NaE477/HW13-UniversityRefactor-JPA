@@ -7,6 +7,7 @@ import models.users.Student;
 import org.hibernate.SessionFactory;
 import services.TermService;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -18,8 +19,8 @@ public class GradeUtils {
     private final TermService termService;
     private final Term term;
 
-    public GradeUtils(SessionFactory sessionFactory) {
-        termService = new TermService(sessionFactory);
+    public GradeUtils(EntityManagerFactory entityManagerFactory) {
+        termService = new TermService(entityManagerFactory);
         term = termService.findCurrentTerm();
     }
 

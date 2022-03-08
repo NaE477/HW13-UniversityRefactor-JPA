@@ -10,6 +10,7 @@ import services.GradeService;
 import services.StudentService;
 import services.TermService;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 public class ViewCoursesController {
@@ -18,11 +19,11 @@ public class ViewCoursesController {
     private final TermService termService;
     private final Student student;
 
-    public ViewCoursesController(SessionFactory sessionFactory,Integer studentId) {
-        gradeService = new GradeService(sessionFactory);
-        courseService = new CourseService(sessionFactory);
-        termService = new TermService(sessionFactory);
-        StudentService studentService = new StudentService(sessionFactory);
+    public ViewCoursesController(EntityManagerFactory entityManagerFactory, Integer studentId) {
+        gradeService = new GradeService(entityManagerFactory);
+        courseService = new CourseService(entityManagerFactory);
+        termService = new TermService(entityManagerFactory);
+        StudentService studentService = new StudentService(entityManagerFactory);
         student = studentService.find(studentId);
     }
 
