@@ -5,14 +5,15 @@ import models.users.Student;
 import org.hibernate.SessionFactory;
 import repos.StudentRep;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 public class StudentService extends BaseService {
     private final StudentRep studentRep;
 
-    public StudentService(SessionFactory sessionFactory) {
-        super(sessionFactory);
-        this.studentRep = new StudentRep(sessionFactory);
+    public StudentService(EntityManagerFactory entityManagerFactory) {
+        super(entityManagerFactory);
+        this.studentRep = new StudentRep(super.getEntityManagerFactory());
     }
 
     public Student signUpStudent(Student student) {

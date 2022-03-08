@@ -4,12 +4,13 @@ import models.things.Term;
 import org.hibernate.SessionFactory;
 import repos.TermRepository;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 public class TermService {
     private final TermRepository termRepository;
-    public TermService(SessionFactory sessionFactory){
-        termRepository = new TermRepository(sessionFactory);
+    public TermService(EntityManagerFactory entityManagerFactory){
+        termRepository = new TermRepository(entityManagerFactory);
     }
 
     public Term initiate(Term term) {

@@ -3,18 +3,18 @@ package services;
 import models.things.Course;
 import models.things.Term;
 import models.users.Professor;
-import models.users.Student;
 import org.hibernate.SessionFactory;
 import repos.CourseRep;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 public class CourseService extends BaseService {
     private final CourseRep courseRep;
 
-    public CourseService(SessionFactory sessionFactory) {
-        super(sessionFactory);
-        courseRep = new CourseRep(super.getSessionFactory());
+    public CourseService(EntityManagerFactory entityManagerFactory) {
+        super(entityManagerFactory);
+        courseRep = new CourseRep(super.getEntityManagerFactory());
     }
 
     public Course createNewCourse(Course course) {

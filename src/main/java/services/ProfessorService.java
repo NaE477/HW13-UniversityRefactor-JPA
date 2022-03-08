@@ -4,20 +4,18 @@ import models.users.Professor;
 import org.hibernate.SessionFactory;
 import repos.ProfessorRep;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProfessorService extends BaseService{
 
     private final ProfessorRep professorRep;
     private final CourseService courseService;
 
-    public ProfessorService(SessionFactory sessionFactory) {
-        super(sessionFactory);
-        professorRep = new ProfessorRep(super.getSessionFactory());
-        courseService = new CourseService(sessionFactory);
+    public ProfessorService(EntityManagerFactory entityManagerFactory) {
+        super(entityManagerFactory);
+        professorRep = new ProfessorRep(super.getEntityManagerFactory());
+        courseService = new CourseService(super.getEntityManagerFactory());
     }
 
     public Professor signUpProfessor(Professor professor){

@@ -6,13 +6,14 @@ import models.users.Student;
 import org.hibernate.SessionFactory;
 import repos.GradeRep;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 public class GradeService extends BaseService{
     private final GradeRep gradeRep;
-    public GradeService(SessionFactory sessionFactory) {
-        super(sessionFactory);
-        gradeRep = new GradeRep(super.getSessionFactory());
+    public GradeService(EntityManagerFactory entityManagerFactory) {
+        super(entityManagerFactory);
+        gradeRep = new GradeRep(super.getEntityManagerFactory());
     }
 
     public Grade pickCourse(Grade grade) {

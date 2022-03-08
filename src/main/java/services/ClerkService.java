@@ -4,15 +4,15 @@ import models.users.Clerk;
 import org.hibernate.SessionFactory;
 import repos.ClerkRep;
 
-import java.sql.Connection;
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 public class ClerkService extends BaseService {
     private final ClerkRep clerkRep;
 
-    public ClerkService(SessionFactory sessionFactory) {
-        super(sessionFactory);
-        clerkRep = new ClerkRep(super.getSessionFactory());
+    public ClerkService(EntityManagerFactory entityManagerFactory) {
+        super(entityManagerFactory);
+        clerkRep = new ClerkRep(super.getEntityManagerFactory());
     }
 
     public Clerk signUpClerk(Clerk clerk) {

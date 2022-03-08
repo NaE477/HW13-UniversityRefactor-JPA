@@ -3,13 +3,13 @@ package services;
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 
-import java.sql.Connection;
+import javax.persistence.EntityManagerFactory;
 
 @Getter
 public abstract class BaseService {
-    private final SessionFactory sessionFactory;
+    private final EntityManagerFactory entityManagerFactory;
 
-    public BaseService(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public BaseService(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
     }
 }
