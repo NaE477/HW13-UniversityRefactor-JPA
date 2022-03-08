@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import services.ProfessorService;
 import services.TermService;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -17,10 +18,10 @@ public class GetSalaryController {
     private final Professor professor;
     private final TermService termService;
     private final Term term;
-    public GetSalaryController(SessionFactory sessionFactory, Integer professorId) {
-        ProfessorService professorService = new ProfessorService(sessionFactory);
+    public GetSalaryController(EntityManagerFactory entityManagerFactory, Integer professorId) {
+        ProfessorService professorService = new ProfessorService(entityManagerFactory);
         professor = professorService.find(professorId);
-        termService = new TermService(sessionFactory);
+        termService = new TermService(entityManagerFactory);
         term = termService.findCurrentTerm();
     }
 

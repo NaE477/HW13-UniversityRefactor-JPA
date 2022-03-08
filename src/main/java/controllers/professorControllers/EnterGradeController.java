@@ -11,6 +11,7 @@ import services.GradeService;
 import services.ProfessorService;
 import services.StudentService;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,11 +21,11 @@ public class EnterGradeController {
     private final GradeService gradeService;
     private final Professor professor;
 
-    public EnterGradeController(SessionFactory sessionFactory,Integer professorId) {
-        courseService = new CourseService(sessionFactory);
-        studentService = new StudentService(sessionFactory);
-        gradeService = new GradeService(sessionFactory);
-        ProfessorService professorService = new ProfessorService(sessionFactory);
+    public EnterGradeController(EntityManagerFactory entityManagerFactory, Integer professorId) {
+        courseService = new CourseService(entityManagerFactory);
+        studentService = new StudentService(entityManagerFactory);
+        gradeService = new GradeService(entityManagerFactory);
+        ProfessorService professorService = new ProfessorService(entityManagerFactory);
         professor = professorService.find(professorId);
     }
 

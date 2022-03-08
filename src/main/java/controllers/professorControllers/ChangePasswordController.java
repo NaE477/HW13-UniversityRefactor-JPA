@@ -5,6 +5,7 @@ import models.users.Professor;
 import org.hibernate.SessionFactory;
 import services.ProfessorService;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.Scanner;
 
 public class ChangePasswordController {
@@ -12,8 +13,8 @@ public class ChangePasswordController {
     private final Professor professor;
     private final ProfessorService professorService;
 
-    public ChangePasswordController(SessionFactory sessionFactory,Integer professorId) {
-        professorService = new ProfessorService(sessionFactory);
+    public ChangePasswordController(EntityManagerFactory entityManagerFactory, Integer professorId) {
+        professorService = new ProfessorService(entityManagerFactory);
         professor = professorService.find(professorId);
     }
 

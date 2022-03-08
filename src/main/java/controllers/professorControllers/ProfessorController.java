@@ -5,6 +5,7 @@ import models.users.Professor;
 import org.hibernate.SessionFactory;
 import services.ProfessorService;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.Scanner;
 
 public class ProfessorController {
@@ -14,12 +15,12 @@ public class ProfessorController {
     private final Professor professor;
     private final Scanner sc = new Scanner(System.in);
 
-    public ProfessorController(SessionFactory sessionFactory, Integer professorId) {
-        ProfessorService professorService = new ProfessorService(sessionFactory);
+    public ProfessorController(EntityManagerFactory entityManagerFactory, Integer professorId) {
+        ProfessorService professorService = new ProfessorService(entityManagerFactory);
         professor = professorService.find(professorId);
-        enterGradeController = new EnterGradeController(sessionFactory, professorId);
-        getSalaryController = new GetSalaryController(sessionFactory, professorId);
-        changePasswordController = new ChangePasswordController(sessionFactory, professorId);
+        enterGradeController = new EnterGradeController(entityManagerFactory, professorId);
+        getSalaryController = new GetSalaryController(entityManagerFactory, professorId);
+        changePasswordController = new ChangePasswordController(entityManagerFactory, professorId);
     }
 
     public void entry() {
