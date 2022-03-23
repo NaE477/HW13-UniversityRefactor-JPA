@@ -47,7 +47,7 @@ public abstract class BaseRepository<T> implements Repository<T> {
         var transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            entityManager.remove(t);
+            entityManager.remove(entityManager.contains(t) ? t : entityManager.merge(t));
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

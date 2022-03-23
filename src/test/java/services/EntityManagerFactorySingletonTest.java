@@ -6,15 +6,13 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class EntityManagerFactorySingletonTest {
-    private EntityManagerFactorySingletonTest() {
-    }
+    private EntityManagerFactorySingletonTest() {}
 
     private static class Holder {
         static EntityManagerFactory INSTANCE;
 
         static {
-            //registry is useful for creating session factory
-            INSTANCE = Persistence.createEntityManagerFactory("UNIVERSITY");
+            INSTANCE = Persistence.createEntityManagerFactory("university-test");
         }
     }
 

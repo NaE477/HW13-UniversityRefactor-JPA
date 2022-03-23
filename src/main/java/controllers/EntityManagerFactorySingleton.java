@@ -13,12 +13,8 @@ public class EntityManagerFactorySingleton {
         static EntityManagerFactory INSTANCE;
 
         static {
-            var registry = new StandardServiceRegistryBuilder()
-                    .configure("hibernate.cfg.xml") //goes and fetches configurations from hibernate-bank.cfg.xml
-                    .build();
-
             //registry is useful for creating session factory
-            INSTANCE = Persistence.createEntityManagerFactory("UNIVERSITY");
+            INSTANCE = Persistence.createEntityManagerFactory("university");
         }
     }
 

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +32,7 @@ class ClerkServiceTest {
     @Test
     void signUpClerk() {
         //Arrange
-        Clerk clerk = new Clerk(0,"firstname","lastname","username","password");
+        Clerk clerk = new Clerk(null,"firstname","lastname","username","password");
 
         //Act
         Clerk clerkToSign = clerkService.signUpClerk(clerk);
@@ -46,7 +47,7 @@ class ClerkServiceTest {
     @Test
     void findById() {
         //Arrange
-        var clerk = new Clerk(0,"firstname","lastname","username","password");
+        var clerk = new Clerk(null,"firstname","lastname","username","password");
         var clerkToSign = clerkService.signUpClerk(clerk);
 
         //Act
@@ -61,7 +62,7 @@ class ClerkServiceTest {
     @Test
     void findByUsername() {
         //Arrange
-        var clerk = new Clerk(0,"firstname","lastname","username","password");
+        var clerk = new Clerk(null,"firstname","lastname","username","password");
         var clerkToSign = clerkService.signUpClerk(clerk);
 
         //Act
@@ -76,9 +77,9 @@ class ClerkServiceTest {
     @Test
     void findAll() {
         //Arrange
-        var clerk1 = new Clerk(0,"firstname1","lastname1","username1","password");
-        var clerk2 = new Clerk(0,"firstname2","lastname2","username2","password");
-        var clerk3 = new Clerk(0,"firstname3","lastname3","username3","password");
+        var clerk1 = new Clerk(null,"firstname1","lastname1","username1","password");
+        var clerk2 = new Clerk(null,"firstname2","lastname2","username2","password");
+        var clerk3 = new Clerk(null,"firstname3","lastname3","username3","password");
         clerkService.signUpClerk(clerk1);
         clerkService.signUpClerk(clerk2);
         clerkService.signUpClerk(clerk3);
@@ -98,7 +99,7 @@ class ClerkServiceTest {
     @Test
     void editProfile() {
         //Arrange
-        var clerk = new Clerk(0,"firstname","lastname","username","password");
+        var clerk = new Clerk(null,"firstname","lastname","username","password");
         clerkService.signUpClerk(clerk);
         var clerkToFind = clerkService.find("username");
 
@@ -119,7 +120,7 @@ class ClerkServiceTest {
     @Test
     void deleteClerk() {
         //Arrange
-        var clerk = new Clerk(0,"firstname","lastname","username","password");
+        var clerk = new Clerk(null,"firstname","lastname","username","password");
         clerkService.signUpClerk(clerk);
         var clerkToFind = clerkService.find("username");
 
@@ -127,10 +128,8 @@ class ClerkServiceTest {
         clerkService.deleteClerk(clerkToFind);
 
         //Assert
-        assertAll(
-                () -> assertNull(clerkService.find("username")),
-                () -> assertNull(clerkService.find(clerk.getId()))
-        );
+        assertNull(clerkService.find("username"));
+        assertNull(clerkService.find(clerk.getId()));
     }
 
     @AfterEach

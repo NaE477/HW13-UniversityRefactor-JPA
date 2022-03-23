@@ -1,10 +1,13 @@
-<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
-    <persistence-unit name="UNIVERSITY">
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="university-test">
+    <!--<persistence-unit name="university">-->
         <description>
             Persistence unit for Hibernate User Guide
         </description>
-
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>models.things.Course</class>
         <class>models.things.Grade</class>
@@ -15,16 +18,14 @@
         <class>models.users.ProfPosition</class>
         <class>models.users.Student</class>
         <class>models.users.User</class>
-        
-        <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/test_university"/>
             <property name="javax.persistence.jdbc.user" value="intellij"/>
             <property name="javax.persistence.jdbc.password" value="intellij"/>
-            <property name="show_sql" value="true"/>
+            <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
     </persistence-unit>
