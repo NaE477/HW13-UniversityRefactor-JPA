@@ -31,17 +31,17 @@ class CourseServiceTest {
 
     @BeforeEach
     void fillDependencies() {
-        professor = new Professor(0,"pFirstname","pLastname","pUsername","pPassword", ProfPosition.C);
+        professor = new Professor(null,"pFirstname","pLastname","pUsername","pPassword", ProfPosition.C);
         professorService.signUpProfessor(professor);
 
-        term = new Term(0,1,null);
+        term = new Term(null,1,null);
         termService.initiate(term);
     }
 
     @Test
     void createNewCourse() {
         //Arrange
-        Course course = new Course(0,3,"course",professor,term,null);
+        Course course = new Course(null,3,"course",professor,term,null);
         //Act
         Course courseToSave = courseService.createNewCourse(course);
         //Assert
@@ -53,7 +53,7 @@ class CourseServiceTest {
     @Test
     void find() {
         //Arrange
-        Course course = new Course(0,3,"course",professor,term,null);
+        Course course = new Course(null,3,"course",professor,term,null);
         Course courseToSave = courseService.createNewCourse(course);
         //Act
         Course courseToFind = courseService.find(courseToSave.getId());
@@ -65,9 +65,9 @@ class CourseServiceTest {
     @Test
     void findAll() {
         //Arrange
-        Course course1 = new Course(0,3,"course1",professor,term,null);
-        Course course2 = new Course(0,3,"course2",professor,term,null);
-        Course course3 = new Course(0,3,"course3",professor,term,null);
+        Course course1 = new Course(null,3,"course1",professor,term,null);
+        Course course2 = new Course(null,3,"course2",professor,term,null);
+        Course course3 = new Course(null,3,"course3",professor,term,null);
         courseService.createNewCourse(course1);
         courseService.createNewCourse(course2);
         courseService.createNewCourse(course3);
@@ -80,10 +80,10 @@ class CourseServiceTest {
     @Test
     void findAllByProfessor() {
         //Arrange
-        Course course1 = new Course(0,3,"course1",professor,term,null);
-        Course course2 = new Course(0,3,"course2",professor,term,null);
-        Course course3 = new Course(0,3,"course3",professor,term,null);
-        Course course4 = new Course(0,3,"course4",null,term,null);
+        Course course1 = new Course(null,3,"course1",professor,term,null);
+        Course course2 = new Course(null,3,"course2",professor,term,null);
+        Course course3 = new Course(null,3,"course3",professor,term,null);
+        Course course4 = new Course(null,3,"course4",null,term,null);
         courseService.createNewCourse(course1);
         courseService.createNewCourse(course2);
         courseService.createNewCourse(course3);
@@ -98,10 +98,10 @@ class CourseServiceTest {
     @Test
     void detachProfessor() {
         //Arrange
-        Course course1 = new Course(0,3,"course1",professor,term,null);
-        Course course2 = new Course(0,3,"course2",professor,term,null);
-        Course course3 = new Course(0,3,"course3",professor,term,null);
-        Course course4 = new Course(0,3,"course4",null,term,null);
+        Course course1 = new Course(null,3,"course1",professor,term,null);
+        Course course2 = new Course(null,3,"course2",professor,term,null);
+        Course course3 = new Course(null,3,"course3",professor,term,null);
+        Course course4 = new Course(null,3,"course4",null,term,null);
         courseService.createNewCourse(course1);
         courseService.createNewCourse(course2);
         courseService.createNewCourse(course3);
@@ -115,7 +115,7 @@ class CourseServiceTest {
     @Test
     void editCourse() {
         //Arrange
-        Course course = new Course(0,3,"course",professor,term,null);
+        Course course = new Course(null,3,"course",professor,term,null);
         Course courseToSave = courseService.createNewCourse(course);
         //Act
         Course courseToEdit = courseService.find(courseToSave.getId());
@@ -130,7 +130,7 @@ class CourseServiceTest {
     @Test
     void deleteCourse() {
         //Arrange
-        Course course = new Course(0,3,"course",professor,term,null);
+        Course course = new Course(null,3,"course",professor,term,null);
         Course courseToSave = courseService.createNewCourse(course);
         //Act
         courseService.deleteCourse(courseToSave);

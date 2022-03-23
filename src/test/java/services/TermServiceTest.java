@@ -32,7 +32,7 @@ class TermServiceTest {
     @Test
     void initiateTest() {
         //Arrange
-        Term toInitiate = new Term(0,14001,null);
+        Term toInitiate = new Term(null,14001,null);
         //Act
         var toIns = termService.initiate(toInitiate);
         //Assert
@@ -44,7 +44,7 @@ class TermServiceTest {
     @Test
     void endTerm() {
         //Arrange
-        Term firstTerm = new Term(0,14001,null);
+        Term firstTerm = new Term(null,14001,null);
         termService.initiate(firstTerm);
         //Act
         termService.endTerm();
@@ -55,7 +55,7 @@ class TermServiceTest {
     @Test
     void findCurrentTerm() {
         //Arrange
-        Term firstTerm = new Term(0,14001,null);
+        Term firstTerm = new Term(null,14001,null);
         termService.initiate(firstTerm);
         termService.endTerm();
         termService.endTerm();
@@ -68,7 +68,7 @@ class TermServiceTest {
     @Test
     void findFirstTerm() {
         //Arrange
-        Term firstTerm = new Term(0,14001,null);
+        Term firstTerm = new Term(null,14001,null);
         termService.initiate(firstTerm);
         termService.endTerm();
         termService.endTerm();
@@ -82,7 +82,7 @@ class TermServiceTest {
     @Test
     void findAll() {
         //Arrange
-        Term firstTerm = new Term(0,14001,null);
+        Term firstTerm = new Term(null,14001,null);
         termService.initiate(firstTerm);
         termService.endTerm();
         termService.endTerm();

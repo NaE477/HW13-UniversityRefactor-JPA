@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManagerFactory;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,14 +48,14 @@ class GradeServiceTest {
     @BeforeEach
     void fillDependencies() {
         student = new Student
-                (0,"studentFname","studentLname","studentUsername","studentPassword");
+                (null,"studentFname","studentLname","studentUsername","studentPassword");
         Professor professor = new Professor
-                (0, "pFirstname", "pLastname", "pUsername", "pPassword", ProfPosition.C);
-        Term term = new Term(0, 141, null);
+                (null, "pFirstname", "pLastname", "pUsername", "pPassword", ProfPosition.C);
+        Term term = new Term(null, 141, null);
 
-        course1 = new Course(0,3,"course", professor, term,null);
-        course2 = new Course(0,3,"course", professor, term,null);
-        course3 = new Course(0,3,"course", professor, term,null);
+        course1 = new Course(null,3,"course", professor, term,new HashSet<>());
+        course2 = new Course(null,3,"course", professor, term,new HashSet<>());
+        course3 = new Course(null,3,"course", professor, term,new HashSet<>());
 
         studentService.signUpStudent(student);
         professorService.signUpProfessor(professor);
@@ -67,8 +68,8 @@ class GradeServiceTest {
     @Test
     void pickCourse() {
         //Arrange
-        Grade toSave = new Grade(0,student,course1,18.0);
-        Grade toSave2 = new Grade(0,student,course2,18.0);
+        Grade toSave = new Grade(null,student,course1,18.0);
+        Grade toSave2 = new Grade(null,student,course2,18.0);
         //Act
         Grade toInsert = gradeService.pickCourse(toSave);
         Grade toInsert2 = gradeService.pickCourse(toSave2);
@@ -83,9 +84,9 @@ class GradeServiceTest {
     @Test
     void updateGrade() {
         //Arrange
-        Grade toSave = new Grade(0,student,course1,18.0);
+        Grade toSave = new Grade(null,student,course1,18.0);
         gradeService.pickCourse(toSave);
-        Course newCourse = new Course(0,10,"new course",null,null,null);
+        Course newCourse = new Course(null,10,"new course",new Professor(),new Term(),new HashSet<>());
         courseService.createNewCourse(newCourse);
         //Act
         Grade toEdit = gradeService.find(student,course1);
@@ -101,7 +102,7 @@ class GradeServiceTest {
     @Test
     void deleteGrade() {
         //Arrange
-        Grade toSave = new Grade(0,student,course1,18.0);
+        Grade toSave = new Grade(null,student,course1,18.0);
         gradeService.pickCourse(toSave);
         //Act
         Grade toDelete = gradeService.find(student,course1);
@@ -113,7 +114,7 @@ class GradeServiceTest {
     @Test
     void find() {
         //Arrange
-        var grade = new Grade(0,student,course1,18.0);
+        var grade = new Grade(null,student,course1,18.0);
         gradeService.pickCourse(grade);
         //Act
         Grade toFind = gradeService.find(student,course1);
@@ -124,11 +125,11 @@ class GradeServiceTest {
     @Test
     void findAllByStudent() {
         //Arrange
-        Student newStudent = new Student(0,"newStudent","newStudent","newStudent","newStudent");
+        Student newStudent = new Student(null,"newStudent","newStudent","newStudent","newStudent");
         studentService.signUpStudent(newStudent);
-        Grade grade1 = new Grade(0,student,course1,13.0);
-        Grade grade2 = new Grade(0,student,course2,15.0);
-        Grade shouldNotBeFound = new Grade(0,newStudent,course3,18.0);
+        Grade grade1 = new Grade(null,student,course1,13.0);
+        Grade grade2 = new Grade(null,student,course2,15.0);
+        Grade shouldNotBeFound = new Grade(null,newStudent,course3,18.0);
         gradeService.pickCourse(grade1);
         gradeService.pickCourse(grade2);
         gradeService.pickCourse(shouldNotBeFound);

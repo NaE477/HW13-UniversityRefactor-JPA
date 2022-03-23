@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
+import javax.persistence.RollbackException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,9 +34,9 @@ class ProfessorServiceTest {
     void signUpProfessor() {
         //Arrange
         var professor = new Professor
-                (0,"pFirstname","pLastname","pUsername","pLastname", ProfPosition.C);
+                (null,"pFirstname","pLastname","pUsername","pLastname", ProfPosition.C);
         var conflictMaker = new Professor
-                (0,"pFirstname2","pLastname2","pUsername","pLastname2", ProfPosition.NC);
+                (null,"pFirstname2","pLastname2","pUsername","pLastname2", ProfPosition.NC);
         //Act
         var toSign = professorService.signUpProfessor(professor);
         //Assert
@@ -49,7 +50,7 @@ class ProfessorServiceTest {
     void findById() {
         //Arrange
         var professor = new Professor
-                (0,"pFirstname","pLastname","pUsername","pLastname", ProfPosition.C);
+                (null,"pFirstname","pLastname","pUsername","pLastname", ProfPosition.C);
         var toSign = professorService.signUpProfessor(professor);
         //Act
         var toFind = professorService.find(toSign.getId());
@@ -63,7 +64,7 @@ class ProfessorServiceTest {
     void findByUsername() {
         //Arrange
         var professor = new Professor
-                (0,"pFirstname","pLastname","pUsername","pLastname", ProfPosition.C);
+                (null,"pFirstname","pLastname","pUsername","pLastname", ProfPosition.C);
         var toSign = professorService.signUpProfessor(professor);
         //Act
         var toFind = professorService.find(toSign.getUsername());
@@ -77,11 +78,11 @@ class ProfessorServiceTest {
     void findAll() {
         //Arrange
         var professor1 = new Professor
-                (0,"pFirstname","pLastname","pUsername1","pLastname", ProfPosition.C);
+                (null,"pFirstname","pLastname","pUsername1","pLastname", ProfPosition.C);
         var professor2 = new Professor
-                (0,"pFirstname","pLastname","pUsername2","pLastname", ProfPosition.C);
+                (null,"pFirstname","pLastname","pUsername2","pLastname", ProfPosition.C);
         var professor3 = new Professor
-                (0,"pFirstname","pLastname","pUsername3","pLastname", ProfPosition.C);
+                (null,"pFirstname","pLastname","pUsername3","pLastname", ProfPosition.C);
         professorService.signUpProfessor(professor1);
         professorService.signUpProfessor(professor2);
         professorService.signUpProfessor(professor3);
@@ -96,9 +97,9 @@ class ProfessorServiceTest {
     void editProfile() {
         //Arrange
         var professor = new Professor
-                (0,"pFirstname","pLastname","pUsername1","pLastname", ProfPosition.C);
+                (null,"pFirstname","pLastname","pUsername1","pLastname", ProfPosition.C);
         var toAssertUsernameUniqueness = new Professor
-                (0,"pFirstname","pLastname","pUsername2","pLastname", ProfPosition.C);
+                (null,"pFirstname","pLastname","pUsername2","pLastname", ProfPosition.C);
         var toEdit = professorService.signUpProfessor(professor);
         professorService.signUpProfessor(toAssertUsernameUniqueness);
         //Act
@@ -110,17 +111,13 @@ class ProfessorServiceTest {
         assertEquals("edited",professorService.find(toEdit.getId()).getUsername());
         assertEquals("edited",professorService.find("edited").getFirstname());
         assertEquals(ProfPosition.NC,professorService.find("edited").getProfPosition());
-        assertThrows(PersistenceException.class, () -> {
-            toEdit.setUsername("pUsername2");
-            professorService.editProfile(toEdit);
-        });
     }
 
     @Test
     void deleteProfessor() {
         //Arrange
         var professor = new Professor
-                (0,"pFirstname","pLastname","pUsername1","pLastname", ProfPosition.C);
+                (null,"pFirstname","pLastname","pUsername1","pLastname", ProfPosition.C);
         var toSave = professorService.signUpProfessor(professor);
         //Act
         professorService.deleteProfessor(toSave);

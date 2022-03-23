@@ -39,7 +39,7 @@ class StudentServiceTest {
     void signUpStudent() {
         //Arrange
         var student = new Student
-                (0,"sFirstname","sLastname","sUsername","sLastname");
+                (null,"sFirstname","sLastname","sUsername","sLastname");
         //Act
         var toSave = studentService.signUpStudent(student);
         //Assert
@@ -52,7 +52,7 @@ class StudentServiceTest {
     void findById() {
         //Arrange
         var student = new Student
-                (0,"sFirstname","sLastname","sUsername","sLastname");
+                (null,"sFirstname","sLastname","sUsername","sLastname");
         studentService.signUpStudent(student);
         //Act
         var toFind = studentService.find(student.getId());
@@ -65,7 +65,7 @@ class StudentServiceTest {
     void findByUsername() {
         //Arrange
         var student = new Student
-                (0,"sFirstname","sLastname","sUsername","sLastname");
+                (null,"sFirstname","sLastname","sUsername","sLastname");
         studentService.signUpStudent(student);
         //Act
         var toFind = studentService.find(student.getUsername());
@@ -78,11 +78,11 @@ class StudentServiceTest {
     void findAll() {
         //Arrange
         var student1 = new Student
-                (0,"sFirstname","sLastname","sUsername1","sLastname");
+                (null,"sFirstname","sLastname","sUsername1","sLastname");
         var student2 = new Student
-                (0,"sFirstname","sLastname","sUsername2","sLastname");
+                (null,"sFirstname","sLastname","sUsername2","sLastname");
         var student3 = new Student
-                (0,"sFirstname","sLastname","sUsername3","sLastname");
+                (null,"sFirstname","sLastname","sUsername3","sLastname");
         studentService.signUpStudent(student1);
         studentService.signUpStudent(student2);
         studentService.signUpStudent(student3);
@@ -100,30 +100,30 @@ class StudentServiceTest {
         GradeService gradeService = new GradeService(EntityManagerFactorySingletonTest.getInstance());
         ProfessorService professorService = new ProfessorService(EntityManagerFactorySingletonTest.getInstance());
         TermService termService = new TermService(EntityManagerFactorySingletonTest.getInstance());
-        Term term = new Term(0,3,null);
+        Term term = new Term(null,3,null);
         termService.initiate(term);
-        var professor = new Professor(0,"pFirstname","pLastname","pUsername","pLastname", ProfPosition.C);
+        var professor = new Professor(null,"pFirstname","pLastname","pUsername","pLastname", ProfPosition.C);
         professorService.signUpProfessor(professor);
-        var course1 = new Course(0,3,"course1",professor,term,null);
-        var course2 = new Course(0,2,"course2",professor,term,null);
-        var course3 = new Course(0,1,"course3",professor,term,null);
+        var course1 = new Course(null,3,"course1",professor,term,null);
+        var course2 = new Course(null,2,"course2",professor,term,null);
+        var course3 = new Course(null,1,"course3",professor,term,null);
         courseService.createNewCourse(course1);
         courseService.createNewCourse(course2);
         courseService.createNewCourse(course3);
         var student1 = new Student
-                (0,"sFirstname","sLastname","sUsername1","sLastname");
+                (null,"sFirstname","sLastname","sUsername1","sLastname");
         var student2 = new Student
-                (0,"sFirstname","sLastname","sUsername2","sLastname");
+                (null,"sFirstname","sLastname","sUsername2","sLastname");
         var student3 = new Student
-                (0,"sFirstname","sLastname","sUsername3","sLastname");
+                (null,"sFirstname","sLastname","sUsername3","sLastname");
         studentService.signUpStudent(student1);
         studentService.signUpStudent(student2);
         studentService.signUpStudent(student3);
-        Grade grade1 = new Grade(0,student1,course1,null);
-        Grade grade2 = new Grade(0,student1,course2,null);
-        Grade grade3 = new Grade(0,student1,course3,null);
-        Grade grade4 = new Grade(0,student2,course3,null);
-        Grade grade5 = new Grade(0,student3,course3,null);
+        Grade grade1 = new Grade(null,student1,course1,null);
+        Grade grade2 = new Grade(null,student1,course2,null);
+        Grade grade3 = new Grade(null,student1,course3,null);
+        Grade grade4 = new Grade(null,student2,course3,null);
+        Grade grade5 = new Grade(null,student3,course3,null);
         gradeService.pickCourse(grade1);
         gradeService.pickCourse(grade2);
         gradeService.pickCourse(grade3);
@@ -146,7 +146,7 @@ class StudentServiceTest {
     void editProfile() {
         //Arrange
         var student = new Student
-                (0,"sFirstname","sLastname","sUsername","sPassword");
+                (null,"sFirstname","sLastname","sUsername","sPassword");
         var toEdit = studentService.signUpStudent(student);
         //Act
         toEdit.setPassword("edited");
@@ -163,7 +163,7 @@ class StudentServiceTest {
     void delete() {
         //Arrange
         var toDelete = new Student
-                (0,"sFirstname","sLastname","sUsername","sLastname");
+                (null,"sFirstname","sLastname","sUsername","sLastname");
         studentService.signUpStudent(toDelete);
         //Act
         studentService.delete(toDelete);

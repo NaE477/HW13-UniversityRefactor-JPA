@@ -18,7 +18,7 @@ public class GradeService extends BaseService{
 
     public Grade pickCourse(Grade grade) {
         if(find(grade.getStudent(),grade.getCourse()) == null) {
-            grade.setGrade(null); //to control course won't be picked with a number
+            grade.setGrade(0.0); //to control course won't be picked with a number
             return gradeRep.ins(grade);
         } else return null;
     }
